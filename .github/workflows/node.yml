@@ -30,7 +30,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.1
       - name: Set Node.js 16.x
         uses: actions/setup-node@v3.8.1
         with:
@@ -92,7 +92,7 @@ jobs:
           - windows-latest
     needs: [ lint ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.1
       - run: npm ci && npm run build
 
   test-native:
@@ -105,7 +105,7 @@ jobs:
           - windows-latest
     needs: [ lint ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.1
       - uses: ./
         with:
           args: --ide,QDJS
@@ -119,7 +119,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ lint, build ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.1
       - uses: dorny/paths-filter@v2
         id: filter
         with:
