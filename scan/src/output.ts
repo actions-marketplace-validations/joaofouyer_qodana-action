@@ -148,12 +148,12 @@ export async function publishOutput(
       reportUrl,
       isPrMode
     )
-
+    core.setOutput('summary', problems.summary)
+    core.setOutput('summary2', 'The value from summary 2')
     await Promise.all([
       putReaction(ANALYSIS_FINISHED_REACTION, ANALYSIS_STARTED_REACTION),
       postResultsToPRComments(toolName, problems.summary, postComment),
-      core.summary.addRaw(problems.summary).write(),
-      new Promise(() => core.setOutput('qodana-scan', problems.summary)),
+      // core.summary.addRaw(problems.summary).write(),
       publishAnnotations(toolName, problems, failedByThreshold, useAnnotations)
     ])
   } catch (error) {
