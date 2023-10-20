@@ -153,6 +153,7 @@ export async function publishOutput(
       putReaction(ANALYSIS_FINISHED_REACTION, ANALYSIS_STARTED_REACTION),
       postResultsToPRComments(toolName, problems.summary, postComment),
       core.summary.addRaw(problems.summary).write(),
+      new Promise(() => core.setOutput('qodana-scan', problems.summary)),
       publishAnnotations(toolName, problems, failedByThreshold, useAnnotations)
     ])
   } catch (error) {
