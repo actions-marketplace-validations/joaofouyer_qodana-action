@@ -87000,10 +87000,12 @@ ${c.freshLines} lines analyzed, ${c.freshCoveredLines} lines covered`;
           const annotations = (_a = problems.annotations) !== null && _a !== void 0 ? _a : [];
           const toolName = (_b = problems.title.split("found by ")[1]) !== null && _b !== void 0 ? _b : QODANA_CHECK_NAME;
           problems.summary = getSummary(toolName, annotations, coverageInfo, licensesInfo, reportUrl, isPrMode);
+          core2.setOutput("summary", problems.summary);
+          core2.setOutput("summary2", "The value from summary 2");
           yield Promise.all([
             (0, utils_12.putReaction)(utils_12.ANALYSIS_FINISHED_REACTION, utils_12.ANALYSIS_STARTED_REACTION),
             (0, utils_12.postResultsToPRComments)(toolName, problems.summary, postComment),
-            core2.summary.addRaw(problems.summary).write(),
+            // core.summary.addRaw(problems.summary).write(),
             (0, annotations_1.publishAnnotations)(toolName, problems, failedByThreshold, useAnnotations)
           ]);
         } catch (error) {
