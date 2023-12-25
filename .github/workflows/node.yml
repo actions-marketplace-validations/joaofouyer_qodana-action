@@ -30,9 +30,9 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.1
       - name: Set Node.js 16.x
-        uses: actions/setup-node@v3.8.1
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: 16.x
       - name: Install dependencies
@@ -53,7 +53,7 @@ jobs:
           fi
         id: diffscan
       # If index.js was different from expected, upload the expected version as an artifact
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ failure() && steps.diffscan.conclusion == 'failure' }}
         with:
           name: dist
@@ -74,7 +74,7 @@ jobs:
             exit 1
           fi
         id: diffvsts
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ failure() && steps.diffvsts.conclusion == 'failure' }}
         with:
           name: dist
@@ -92,7 +92,7 @@ jobs:
           - windows-latest
     needs: [ lint ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.1
       - run: npm ci && npm run build
 
   test-native:
@@ -105,7 +105,7 @@ jobs:
           - windows-latest
     needs: [ lint ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.1
       - uses: ./
         with:
           args: --ide,QDJS
@@ -119,7 +119,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ lint, build ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.1
       - uses: dorny/paths-filter@v2
         id: filter
         with:
@@ -128,7 +128,7 @@ jobs:
             - "vsts/vss-extension.dev.json"
       - name: Set Node.js 12.x
         if: steps.filter.outputs.azure-dev == 'true'
-        uses: actions/setup-node@v3.8.1
+        uses: actions/setup-node@v4.0.1
         with:
           node-version: 12.x
       - name: Install dependencies
@@ -146,7 +146,7 @@ jobs:
           AZURE_TOKEN: ${{ secrets.AZURE_TOKEN }}
       - name: Upload vsix
         if: steps.filter.outputs.azure-dev == 'true'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: qodana-dev.vsix
           path: vsts/qodana-dev.vsix
